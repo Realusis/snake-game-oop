@@ -5,7 +5,7 @@ class gameobject(ABC):
     
     def __init__(self):
         self._x = x
-        self._y = yield
+        self._y = y
 
     @roperty
     def x(self):
