@@ -25,7 +25,7 @@ class Game:
         self._width = 600
         self._height = 600
         self._block_size = 20
-        self._fps = 10
+        self._fps = 8
         self._screen = pygame.display.set_mode((self._width, self._height))
         pygame.display.set_caption("Snake Game")
         self._clock = pygame.time.Clock()
@@ -58,7 +58,6 @@ class Game:
 
         pygame.display.flip()
 
-
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -70,3 +69,40 @@ class Game:
                     elif event.key == pygame.K_q:
                         pygame.quit()
                         sys.exit()
+
+    def run(self):
+        """Main game loop that handles events, updates game state, and renders the game."""
+        snake = Snake(self._width // 2, self._height // 2, self._block_size)
+        food = Food(self._height, self._width, self._block_size)
+
+        while True:
+            self._clock.tick(self._fps)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        snake.set_direction(0, -self._block_size)
+                    elif event.key == pygame.K_DOWN:
+                        snake.set_direction(0, self._block_size)
+                    elif event.key == pygame.K_LEFT:
+                        snake.set_direction(-self._block_size, 0)
+                    elif event.key == pygame.K_RIGHT:
+                        snake.set_direction(self._block_size, 0)
+
+            snake.move()
+
+            if snake.check_self_collision() or snake.check_wall_collision(self._width, self._height):
+                if self.game_over_screen(snake.score):
+                    return self.run()
+
+            if snake.body[0][0] == food.x and snake.body[0][1] == food.y:
+                snake.grow()
+                food.respawn()
+
+            self._screen.fill((0, 0, 0))
+            food.draw(self._screen)
+            snake.draw(self._screen)
+            self._draw_score(snake.score)
+            pygame.display.flip()

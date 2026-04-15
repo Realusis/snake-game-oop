@@ -1,5 +1,11 @@
 from game import Game
 
-game=Game()
-print("Welcome to the Snake Game!")
-print(game._width, game._height, game._block_size)
+
+def main():
+    game = Game()
+    name = input("Enter your name: ")
+    game.set_player_name(name)
+    game.run()
+
+if __name__ == "__main__":
+    main()
