@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
-class gameobject(ABC):
+class Gameobject(ABC):
     """Abstract base class for all game objects apples, snake etc."""
     
-    def __init__(self):
+    def __init__(self, x, y):
         self._x = x
         self._y = y
 
-    @roperty
+    @property
     def x(self):
         return self._x
     
