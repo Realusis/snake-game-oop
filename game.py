@@ -69,12 +69,54 @@ class Game:
                     elif event.key == pygame.K_q:
                         pygame.quit()
                         sys.exit()
+    def _get_player_name(self):
+        """Prompts the player to enter their name before starting the game."""
+        self._screen.fill((0, 0, 0))
+        prompt_text = self._font.render("Enter your name: ", True, (255, 215, 0))
+        self._screen.blit(prompt_text, (self._width // 2 - 100, self._height // 2 - 20))
+        pygame.display.flip()
+
+        name = ""
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        return name.strip() if name.strip() else "Player"
+                    elif event.key == pygame.K_BACKSPACE:
+                        name = name[:-1]
+                    else:
+                        name += event.unicode
+
+            self._screen.fill((0, 0, 0))
+            self._screen.blit(prompt_text, (self._width // 2 - 100, self._height // 2 - 20))
+            name_text = self._font.render(name, True, (255, 255, 255))
+            self._screen.blit(name_text, (self._width // 2 - 100, self._height // 2 + 20))
+            pygame.display.flip()
+
 
     def run(self):
         """Main game loop that handles events, updates game state, and renders the game."""
+        name = self._get_player_name()
+        self._player_name = name
         snake = Snake(self._width // 2, self._height // 2, self._block_size)
         food = Food(self._height, self._width, self._block_size)
 
+        self._screen.fill((0, 0, 0))
+        start_text = self._font.render("Press any key to start!", True, (255, 255, 255))
+        self._screen.blit(start_text, (self._width // 2 - 130, self._height // 2))
+        pygame.display.flip()
+
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    waiting = False
         while True:
             self._clock.tick(self._fps)
             for event in pygame.event.get():
