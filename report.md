@@ -144,3 +144,25 @@ def test_initial_length(self):
     self.snake.grow()
     self.assertEqual(len(self.snake.body), initial_length + 1)
 ```
+
+## 3. Results and Summary
+
+### Results 
+- The snake game was successfully implemented using OOP principles in python.
+- All four OOP pillars were applied: Encapsulation , Inheritance, Abstraction and Polymorphism.
+- The Singleton design pattern was used to ensure only one Game Instance exists.
+- Player scores are saved and loaded from CSV file using the FileManager class.
+- 6 unit tests were written and all pass successfully.
+
+### Conclusions
+The goal of this coursework was to create a Snake game using Object-Oriented Programming principles.
+The result is fully functional game where the player can control a snake, eat food, and compete for high scores.
+All scores are saved to a CSV file and displayed after each game.
+In the future, the game could be extended by adding difficulty levels, different food types, or a multiplayer mode.
+
+## 4. Resources
+- [Python documentation](https://docs.python.org/3/)
+- [Pygame documentation](https://www.pygame.org/docs/)
+- [OOP in Python](https://realpython.com/python3-object-oriented-programming/)
+- [Unittest framework](https://docs.python.org/3/library/unittest.html)
+- [PEP8 style guide](https://pep8.org/)
