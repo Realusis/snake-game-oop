@@ -10,6 +10,12 @@ class TestSnake(unittest.TestCase):
         """Test that the initial score of the snake is set to 0."""
         self.assertEqual(self.snake.score, 0) 
     
+    def test_score_after_multiple_grows(self):
+        """Test score increases correctly after multiple grows."""
+        for _ in range(5):
+            self.snake.grow()
+        self.assertEqual(self.snake.score, 5)
+
     def test_initial_length(self):
         """Test that the initial length of the snake is 1."""
         initial_length = len(self.snake.body)
@@ -30,6 +36,17 @@ class TestSnake(unittest.TestCase):
         """Test that the snake detects wall collisions correctly."""
         snake = Snake(-20, 100, 20)
         self.assertTrue(snake.check_wall_collision(600, 600))  # Should collide with the wall if it moves left from (100, 100)
+
+    def test_self_collision(self):
+        """Test snake detects collision with itself."""
+        self.snake._body = [[100, 100], [80, 100], [60, 100], [100, 100]]
+        self.assertTrue(self.snake.check_self_collision())
+
+    def test_move_changes_position(self):
+        """Test that snake head moves after move() call."""
+        old_head = self.snake.body[0][:]
+        self.snake.move()
+        self.assertNotEqual(self.snake.body[0], old_head)
 
     def test_no_collision(self):
         """Test that the snake does not detect a collision when it is within bounds."""
